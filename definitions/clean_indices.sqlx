@@ -8,12 +8,12 @@ config {
 
 js {
   const projectId = "financial-data-storage"; // Remplacez par votre vrai project ID
-  const databaseId = "bq_data_finance";
+  const databaseId = "bq_data_finance_preprod";
   const indices = ["cac40","DJI","SP500","Nasdaq","Nasdaq100"];
 }
 
 ${indices.map(item => `
-CREATE OR REPLACE VIEW \`${projectId}.${databaseId}.test_${item}\` AS (
+CREATE OR REPLACE VIEW \`${projectId}.${databaseId}.${item}\` AS (
 with Indice_sans_doublons as (
 SELECT 
     Date,
