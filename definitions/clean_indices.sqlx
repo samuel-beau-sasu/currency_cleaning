@@ -8,7 +8,7 @@ config {
 
 js {
   const projectId = "financial-data-storage"; // Remplacez par votre vrai project ID
-  const databaseId = "bq_data_finance_preprod";
+  const databaseId = "clean_data_test";
   const indices = ["cac40","DJI","SP500","Nasdaq","Nasdaq100"];
 }
 
