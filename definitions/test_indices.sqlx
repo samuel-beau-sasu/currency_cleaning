@@ -14,6 +14,7 @@ js {
 
 ${indices.map(item => `
 CREATE OR REPLACE VIEW \`${projectId}.${databaseId}.test_${item}\` AS (
+with Indice_sans_doublons as (
 SELECT 
     Date,
     Ouverture,
@@ -23,5 +24,17 @@ SELECT
     Volume,
     ROW_NUMBER() OVER(PARTITION BY Date ORDER BY timestamp DESC) as rn
 FROM \`${projectId}.bq_data_finance_prod.${item}-raw\`
+order by Date desc
+)
+
+SELECT 
+    Date,
+    Ouverture,
+    Haut,
+    Bas,
+    Cloture,
+    Volume
+from Indice_sans_doublons
+where rn = 1
 order by Date desc
 );`).join('\n')}
