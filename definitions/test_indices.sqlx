@@ -1,4 +1,4 @@
--- definitions/marts/test_minimal.sqlx
+-- definitions/marts/test_indices.sqlx
 
 config {
   type: "operations",
@@ -14,5 +14,14 @@ js {
 
 ${indices.map(item => `
 CREATE OR REPLACE VIEW \`${projectId}.${databaseId}.test_${item}\` AS (
-  SELECT '${item}' AS value
+SELECT 
+    Date,
+    Ouverture,
+    Haut,
+    Bas,
+    Cloture,
+    Volume,
+    ROW_NUMBER() OVER(PARTITION BY Date ORDER BY timestamp DESC) as rn
+FROM \`${projectId}.bq_data_finance_prod.${item}-raw\`
+order by Date desc
 );`).join('\n')}
