@@ -1,0 +1,18 @@
+-- definitions/marts/test_minimal.sqlx
+
+config {
+  type: "operations",
+  schema: "bq_data_finance_prod",
+  description: "Test minimal avec opérations multiples"
+}
+
+js {
+  const test_var = ["test3", "test4"];
+  const projectId = "financial-data-storage"; // Remplacez par votre vrai project ID
+  const databaseId = "bq_data_finance";
+}
+
+${test_var.map(item => `
+CREATE OR REPLACE VIEW \`${projectId}.${databaseId}.test_${item}\` AS (
+  SELECT '${item}' AS value
+);`).join('\n')}
