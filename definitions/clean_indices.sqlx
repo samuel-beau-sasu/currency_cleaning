@@ -2,17 +2,17 @@
 
 config {
   type: "operations",
-  schema: "bq_data_finance",
+  schema: "bq_data_finance_prod",
   description: "Test minimal avec opérations multiples"
 }
 
 js {
   const projectId = "financial-data-storage"; // Remplacez par votre vrai project ID
   const databaseId = "clean_data_prod";
-  const indices = ["cac40","DJI","SP500","Nasdaq","Nasdaq100"];
+  const currency = ["USD_JPY","USD_EUR","USD_CNY","USD_CHF","USD_GBP"];
 }
 
-${indices.map(item => `
+${currency.map(item => `
 CREATE OR REPLACE TABLE \`${projectId}.${databaseId}.${item}\` AS (
 with Indice_sans_doublons as (
 SELECT 
@@ -21,7 +21,6 @@ SELECT
     Haut,
     Bas,
     Cloture,
-    Volume,
     ROW_NUMBER() OVER(PARTITION BY Date ORDER BY timestamp DESC) as rn
 FROM \`${projectId}.bq_data_finance_prod.${item}-raw\`
 order by Date desc
@@ -32,8 +31,7 @@ SELECT
     Ouverture,
     Haut,
     Bas,
-    Cloture,
-    Volume
+    Cloture
 from Indice_sans_doublons
 where rn = 1
 order by Date desc
