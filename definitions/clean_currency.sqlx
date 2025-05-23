@@ -2,13 +2,13 @@
 
 config {
   type: "operations",
-  schema: "bq_data_finance_prod",
+  schema: "bq_data_finance_preprod",
   description: "Test minimal avec opérations multiples"
 }
 
 js {
   const projectId = "financial-data-storage"; // Remplacez par votre vrai project ID
-  const databaseId = "clean_data_prod";
+  const databaseId = "clean_data_preprod"; // base de donnée resultat
   const currency = ["USD_JPY","USD_EUR","USD_CNY","USD_CHF","USD_GBP"];
 }
 
