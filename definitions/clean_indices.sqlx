@@ -13,7 +13,7 @@ js {
 }
 
 ${indices.map(item => `
-CREATE OR REPLACE VIEW \`${projectId}.${databaseId}.${item}\` AS (
+CREATE OR REPLACE TABLE \`${projectId}.${databaseId}.${item}\` AS (
 with Indice_sans_doublons as (
 SELECT 
     Date,
